@@ -1,0 +1,23 @@
+<a class="recipe-card" [routerLink]="['/recipes', recipe.id]">
+  <div class="card-image">
+    @if (recipe.image) {
+      <img [src]="recipe.image" [alt]="recipe.title" />
+    } @else {
+      <div class="card-emoji">{{ getCategoryEmoji(recipe.category) }}</div>
+    }
+    <button class="fav-btn" (click)="onFavorite($event)" [class.active]="recipe.is_favorite">
+      {{ recipe.is_favorite ? '❤️' : '🤍' }}
+    </button>
+    <span class="category-badge">{{ recipe.category }}</span>
+  </div>
+
+  <div class="card-body">
+    <h3 class="card-title">{{ recipe.title }}</h3>
+    <p class="card-desc">{{ recipe.description }}</p>
+    <div class="card-meta">
+      <span>⏱ {{ recipe.cooking_time }} мин</span>
+      <span>👤 {{ recipe.servings }} порц.</span>
+      <span class="author">{{ recipe.author_name }}</span>
+    </div>
+  </div>
+</a>

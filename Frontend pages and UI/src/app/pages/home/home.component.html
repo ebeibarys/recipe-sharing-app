@@ -1,0 +1,60 @@
+<div class="home">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Открой мир вкусов</h1>
+      <p>Делитесь рецептами, находите вдохновение и готовьте с удовольствием</p>
+      <div class="search-bar">
+        <input
+          type="text"
+          placeholder="Найти рецепт..."
+          [(ngModel)]="searchQuery"
+          (keyup.enter)="onSearch()"
+        />
+        <button (click)="onSearch()">🔍 Найти</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section class="categories-section">
+    <div class="container">
+      <h2>Категории</h2>
+      <div class="categories-grid">
+        @for (cat of categories; track cat.value) {
+          <button class="category-card" (click)="browseCategory(cat.value)">
+            <span class="cat-emoji">{{ cat.emoji }}</span>
+            <span class="cat-name">{{ cat.name }}</span>
+          </button>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Recipes -->
+  <section class="featured-section">
+    <div class="container">
+      <h2>Популярные рецепты</h2>
+
+      @if (error) {
+        <div class="error-msg">⚠️ {{ error }}</div>
+      }
+
+      @if (loading) {
+        <div class="loading">Загружаем рецепты...</div>
+      } @else {
+        <div class="recipes-grid">
+          @for (recipe of featuredRecipes; track recipe.id) {
+            <app-recipe-card [recipe]="recipe" (favoriteToggled)="onFavoriteToggled($event)" />
+          } @empty {
+            <p class="empty-msg">Рецептов пока нет. <a routerLink="/recipes">Посмотреть все</a></p>
+          }
+        </div>
+      }
+
+      <div class="see-all">
+        <a routerLink="/recipes" class="btn-primary">Все рецепты →</a>
+      </div>
+    </div>
+  </section>
+</div>

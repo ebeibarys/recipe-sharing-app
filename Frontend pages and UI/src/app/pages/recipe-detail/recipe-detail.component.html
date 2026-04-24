@@ -1,0 +1,91 @@
+<div class="detail-page">
+  <div class="breadcrumb">
+    <a routerLink="/">Главная</a> /
+    <a routerLink="/recipes">Рецепты</a>
+    @if (recipe) { / <span>{{ recipe.title }}</span> }
+  </div>
+
+  @if (error) {
+    <div class="error-msg">⚠️ {{ error }} <a routerLink="/recipes">← Назад</a></div>
+  }
+
+  @if (loading) {
+    <div class="loading">Загружаем рецепт...</div>
+  }
+
+  @if (recipe && !loading) {
+    <div class="detail-card">
+      <!-- Header -->
+      <div class="detail-header">
+        <div class="detail-image">
+          @if (recipe.image) {
+            <img [src]="recipe.image" [alt]="recipe.title" />
+          } @else {
+            <div class="image-placeholder">🍽️</div>
+          }
+        </div>
+
+        <div class="detail-info">
+          <span class="category-tag">{{ recipe.category }}</span>
+          <h1>{{ recipe.title }}</h1>
+          <p class="description">{{ recipe.description }}</p>
+
+          <div class="meta-grid">
+            <div class="meta-item">
+              <span class="meta-label">Время</span>
+              <span class="meta-value">⏱ {{ recipe.cooking_time }} мин</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Порции</span>
+              <span class="meta-value">👤 {{ recipe.servings }}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Автор</span>
+              <span class="meta-value author">{{ recipe.author_name }}</span>
+            </div>
+          </div>
+
+          <div class="actions">
+            @if (authService.isLoggedIn()) {
+              <button class="btn-fav" (click)="toggleFavorite()" [class.active]="recipe.is_favorite">
+                {{ recipe.is_favorite ? '❤️ В избранном' : '🤍 В избранное' }}
+              </button>
+            }
+            @if (isOwner()) {
+              <button class="btn-delete" (click)="deleteConfirm = true">🗑 Удалить</button>
+            }
+          </div>
+
+          @if (deleteConfirm) {
+            <div class="confirm-box">
+              <p>Удалить этот рецепт?</p>
+              <button class="btn-danger" (click)="deleteRecipe()">Да, удалить</button>
+              <button class="btn-cancel" (click)="deleteConfirm = false">Отмена</button>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Ingredients & Instructions -->
+      <div class="detail-body">
+        <div class="section">
+          <h2>🧂 Ингредиенты</h2>
+          <ul class="ingredient-list">
+            @for (item of getIngredientsList(); track item) {
+              <li>{{ item }}</li>
+            }
+          </ul>
+        </div>
+
+        <div class="section">
+          <h2>👩‍🍳 Приготовление</h2>
+          <ol class="instruction-list">
+            @for (step of getInstructionsList(); track step) {
+              <li>{{ step }}</li>
+            }
+          </ol>
+        </div>
+      </div>
+    </div>
+  }
+</div>

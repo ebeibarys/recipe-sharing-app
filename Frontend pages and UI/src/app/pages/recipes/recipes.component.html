@@ -1,0 +1,52 @@
+<div class="recipes-page">
+  <div class="page-header">
+    <h1>Все рецепты</h1>
+    <div class="search-row">
+      <input
+        type="text"
+        placeholder="Поиск рецепта..."
+        [(ngModel)]="searchQuery"
+        (keyup.enter)="onSearch()"
+        class="search-input"
+      />
+      <button class="btn-search" (click)="onSearch()">Найти</button>
+      @if (searchQuery || selectedCategory) {
+        <button class="btn-clear" (click)="clearFilters()">✕ Сбросить</button>
+      }
+    </div>
+  </div>
+
+  <div class="categories-bar">
+    @for (cat of categories; track cat.value) {
+      <button
+        class="cat-btn"
+        [class.active]="selectedCategory === cat.value"
+        (click)="selectCategory(cat.value)"
+      >
+        {{ cat.label }}
+      </button>
+    }
+  </div>
+
+  @if (error) {
+    <div class="error-msg">⚠️ {{ error }}</div>
+  }
+
+  @if (loading) {
+    <div class="loading">Загружаем рецепты...</div>
+  } @else {
+    @if (recipes.length === 0) {
+      <div class="empty-state">
+        <p>🍽️ Рецепты не найдены</p>
+        <button class="btn-clear" (click)="clearFilters()">Сбросить фильтры</button>
+      </div>
+    } @else {
+      <p class="results-count">Найдено: {{ recipes.length }} рецептов</p>
+      <div class="recipes-grid">
+        @for (recipe of recipes; track recipe.id) {
+          <app-recipe-card [recipe]="recipe" (favoriteToggled)="onFavoriteToggled($event)" />
+        }
+      </div>
+    }
+  }
+</div>
