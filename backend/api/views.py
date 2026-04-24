@@ -52,6 +52,8 @@ def register_user(request):
 
 class RecipeListCreateView(APIView):
 
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
         recipes = Recipe.objects.all()
         serializer = RecipeSerializer(recipes, many=True)
@@ -66,8 +68,12 @@ class RecipeListCreateView(APIView):
 
         return Response(serializer.errors, status=400)
 
+    
+
 
 class RecipeDetailView(APIView):
+
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, pk):
         try:
@@ -103,6 +109,8 @@ class RecipeDetailView(APIView):
 
 
 class CommentCreateView(APIView):
+
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
         serializer = CommentSerializer(data=request.data)
