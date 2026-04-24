@@ -1,0 +1,12 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: #f8faf9;
+  color: #1a1a1a;
+  line-height: 1.6;
+}
+
+a { color: inherit; }
+button { font-family: inherit; }
+input, textarea { font-family: inherit; }

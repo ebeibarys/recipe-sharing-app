@@ -1,0 +1,127 @@
+.hero {
+  background: linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%);
+  color: #fff;
+  padding: 5rem 1.5rem;
+  text-align: center;
+}
+
+.hero-content { max-width: 600px; margin: 0 auto; }
+
+.hero h1 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  margin: 0 0 1rem;
+  line-height: 1.2;
+}
+
+.hero p {
+  font-size: 1.15rem;
+  opacity: 0.9;
+  margin: 0 0 2rem;
+}
+
+.search-bar {
+  display: flex;
+  gap: 0;
+  max-width: 480px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 0.9rem 1.2rem;
+  border: none;
+  font-size: 1rem;
+  outline: none;
+}
+
+.search-bar button {
+  padding: 0.9rem 1.4rem;
+  background: #40916c;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.search-bar button:hover { background: #52b788; }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+
+.categories-section { padding: 3.5rem 0 2rem; }
+.featured-section { padding: 2rem 0 4rem; }
+
+h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 1.5rem;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 1rem;
+}
+
+.category-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  background: #f0f7f4;
+  border: 1px solid #d8f3dc;
+  border-radius: 12px;
+  padding: 1.2rem 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #2d6a4f;
+}
+
+.category-card:hover {
+  background: #2d6a4f;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.cat-emoji { font-size: 1.8rem; }
+
+.recipes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.loading, .empty-msg { color: #888; text-align: center; padding: 2rem; }
+.empty-msg a { color: #2d6a4f; }
+
+.error-msg {
+  background: #fff3f3;
+  color: #e74c3c;
+  border: 1px solid #fcc;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.see-all { text-align: center; margin-top: 2.5rem; }
+
+.btn-primary {
+  display: inline-block;
+  background: #2d6a4f;
+  color: #fff;
+  padding: 0.75rem 2rem;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.btn-primary:hover { background: #1b4332; }

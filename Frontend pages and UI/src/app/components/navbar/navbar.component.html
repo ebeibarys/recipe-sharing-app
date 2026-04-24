@@ -1,0 +1,23 @@
+<nav class="navbar">
+  <div class="nav-container">
+    <a class="nav-logo" routerLink="/">
+      <span class="logo-icon">🍴</span>
+      <span class="logo-text">RecipeShare</span>
+    </a>
+
+    <div class="nav-links" [class.open]="menuOpen">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" (click)="menuOpen=false">Главная</a>
+      <a routerLink="/recipes" routerLinkActive="active" (click)="menuOpen=false">Рецепты</a>
+      @if (authService.isLoggedIn()) {
+        <span class="nav-user">👤 {{ currentUser?.username }}</span>
+        <button class="btn-logout" (click)="logout()">Выйти</button>
+      } @else {
+        <a routerLink="/login" class="btn-login" (click)="menuOpen=false">Войти</a>
+      }
+    </div>
+
+    <button class="hamburger" (click)="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>

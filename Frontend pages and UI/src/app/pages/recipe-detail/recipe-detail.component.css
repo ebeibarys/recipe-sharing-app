@@ -1,0 +1,207 @@
+.detail-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+.breadcrumb {
+  font-size: 0.875rem;
+  color: #888;
+  margin-bottom: 1.5rem;
+}
+
+.breadcrumb a { color: #2d6a4f; text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+
+.detail-card {
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid #eee;
+  overflow: hidden;
+}
+
+.detail-header {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 0;
+}
+
+.detail-image {
+  height: 340px;
+  overflow: hidden;
+  background: #f0f7f4;
+}
+
+.detail-image img { width: 100%; height: 100%; object-fit: cover; }
+
+.image-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 5rem;
+}
+
+.detail-info { padding: 2rem; }
+
+.category-tag {
+  display: inline-block;
+  background: #d8f3dc;
+  color: #2d6a4f;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 3px 12px;
+  border-radius: 20px;
+  text-transform: capitalize;
+  margin-bottom: 0.75rem;
+}
+
+.detail-info h1 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin: 0 0 0.75rem;
+}
+
+.description { color: #555; line-height: 1.6; margin-bottom: 1.5rem; }
+
+.meta-grid {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.meta-item { display: flex; flex-direction: column; gap: 2px; }
+.meta-label { font-size: 0.75rem; color: #aaa; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+.meta-value { font-size: 0.95rem; color: #333; font-weight: 600; }
+.meta-value.author { color: #2d6a4f; }
+
+.actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+.btn-fav {
+  padding: 0.6rem 1.2rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.btn-fav.active { background: #fff3f3; border-color: #e74c3c; }
+.btn-fav:hover { border-color: #2d6a4f; }
+
+.btn-delete {
+  padding: 0.6rem 1.2rem;
+  border: 1px solid #fcc;
+  border-radius: 8px;
+  background: none;
+  color: #e74c3c;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.btn-delete:hover { background: #e74c3c; color: #fff; border-color: #e74c3c; }
+
+.confirm-box {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #fff3f3;
+  border-radius: 10px;
+  border: 1px solid #fcc;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.confirm-box p { margin: 0; color: #c0392b; font-size: 0.9rem; }
+
+.btn-danger {
+  padding: 0.5rem 1rem;
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.btn-cancel {
+  padding: 0.5rem 1rem;
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.detail-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-top: 1px solid #eee;
+}
+
+.section {
+  padding: 2rem;
+}
+
+.section:first-child { border-right: 1px solid #eee; }
+
+.section h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 1.2rem;
+}
+
+.ingredient-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ingredient-list li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f5f5f5;
+  color: #444;
+  font-size: 0.95rem;
+}
+
+.ingredient-list li::before { content: '• '; color: #2d6a4f; font-weight: bold; }
+
+.instruction-list {
+  padding: 0 0 0 1.25rem;
+  margin: 0;
+}
+
+.instruction-list li {
+  padding: 0.5rem 0;
+  color: #444;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.loading { text-align: center; padding: 4rem; color: #888; }
+
+.error-msg {
+  background: #fff3f3;
+  color: #e74c3c;
+  border: 1px solid #fcc;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.error-msg a { color: #2d6a4f; margin-left: 1rem; }
+
+@media (max-width: 700px) {
+  .detail-header { grid-template-columns: 1fr; }
+  .detail-image { height: 220px; }
+  .detail-body { grid-template-columns: 1fr; }
+  .section:first-child { border-right: none; border-bottom: 1px solid #eee; }
+}
