@@ -1,0 +1,485 @@
+{
+  "info": {
+    "name": "RecipeShare API",
+    "description": "API для приложения рецептов RecipeShare",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "item": [
+    {
+      "name": "1. Тестовые эндпоинты",
+      "item": [
+        {
+          "name": "Test API",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/test/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "test", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Аутентификация",
+      "item": [
+        {
+          "name": "Регистрация",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"new_user\",\n  \"password\": \"12345678\",\n  \"email\": \"user@example.com\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/auth/register/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "auth", "register", ""]
+            }
+          }
+        },
+        {
+          "name": "Вход (логин)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"chef_artem\",\n  \"password\": \"123456\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/auth/login/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "auth", "login", ""]
+            }
+          }
+        },
+        {
+          "name": "Выход",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/auth/logout/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "auth", "logout", ""]
+            }
+          }
+        },
+        {
+          "name": "Мой профиль",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/auth/me/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "auth", "me", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Категории",
+      "item": [
+        {
+          "name": "Список всех категорий",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/categories/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "categories", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Рецепты",
+      "item": [
+        {
+          "name": "Список всех рецептов",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/recipes/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "recipes", ""]
+            }
+          }
+        },
+        {
+          "name": "Поиск по названию",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/recipes/?search=борщ",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "query": [
+                {
+                  "key": "search",
+                  "value": "борщ"
+                }
+              ],
+              "path": ["api", "recipes", ""]
+            }
+          }
+        },
+        {
+          "name": "Фильтр по категории",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/recipes/?category=Завтрак",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "query": [
+                {
+                  "key": "category",
+                  "value": "Завтрак"
+                }
+              ],
+              "path": ["api", "recipes", ""]
+            }
+          }
+        },
+        {
+          "name": "Фильтр по сложности",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/recipes/?difficulty=easy",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "query": [
+                {
+                  "key": "difficulty",
+                  "value": "easy"
+                }
+              ],
+              "path": ["api", "recipes", ""]
+            }
+          }
+        },
+        {
+          "name": "Поиск + фильтры вместе",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/recipes/?search=суп&category=Суп&difficulty=easy",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "query": [
+                {
+                  "key": "search",
+                  "value": "суп"
+                },
+                {
+                  "key": "category",
+                  "value": "Суп"
+                },
+                {
+                  "key": "difficulty",
+                  "value": "easy"
+                }
+              ],
+              "path": ["api", "recipes", ""]
+            }
+          }
+        },
+        {
+          "name": "Популярные рецепты (главная)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/recipes/featured/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "recipes", "featured", ""]
+            }
+          }
+        },
+        {
+          "name": "Получить рецепт по ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/recipes/1/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "recipes", "1", ""]
+            }
+          }
+        },
+        {
+          "name": "Создать рецепт (нужен токен)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Мой новый рецепт\",\n  \"description\": \"Это очень вкусное блюдо\",\n  \"ingredients\": \"Ингредиент 1\\nИнгредиент 2\\nИнгредиент 3\",\n  \"instructions\": \"1. Шаг первый\\n2. Шаг второй\\n3. Шаг третий\",\n  \"cooking_time\": 45,\n  \"servings\": 4,\n  \"difficulty\": \"medium\",\n  \"image\": \"https://picsum.photos/id/1015/500/400\",\n  \"category\": 1\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/recipes/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "recipes", ""]
+            }
+          }
+        },
+        {
+          "name": "Обновить рецепт (нужен токен)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"ОБНОВЛЕННЫЙ рецепт\",\n  \"cooking_time\": 60\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/recipes/1/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "recipes", "1", ""]
+            }
+          }
+        },
+        {
+          "name": "Удалить рецепт (нужен токен)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/recipes/1/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "recipes", "1", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Лайки и Сохранения",
+      "item": [
+        {
+          "name": "Поставить/убрать лайк",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/recipes/1/like/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "recipes", "1", "like", ""]
+            }
+          }
+        },
+        {
+          "name": "Сохранить/отменить сохранение",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/recipes/1/save/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "recipes", "1", "save", ""]
+            }
+          }
+        },
+        {
+          "name": "Список сохраненных рецептов",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/saved/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "saved", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. Комментарии",
+      "item": [
+        {
+          "name": "Комментарии к рецепту",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/api/comments/?recipe=1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "query": [
+                {
+                  "key": "recipe",
+                  "value": "1"
+                }
+              ],
+              "path": ["api", "comments", ""]
+            }
+          }
+        },
+        {
+          "name": "Добавить комментарий (нужен токен)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"Отличный рецепт! Обязательно приготовлю!\",\n  \"recipe\": 1\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/comments/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "comments", ""]
+            }
+          }
+        },
+        {
+          "name": "Удалить комментарий (нужен токен)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/comments/1/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "comments", "1", ""]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
