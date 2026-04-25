@@ -1,0 +1,109 @@
+<div class="home">
+  <!-- Hero секция с анимациями -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge animate-scale delay-1">
+        ✨ Добро пожаловать в RecipeShare
+      </div>
+      
+      <h1 class="animate-left delay-2">
+        Готовьте с 
+        <span class="gradient-text">любовью</span>
+        <br>
+        Делитесь с 
+        <span class="gradient-text-secondary">радостью</span>
+      </h1>
+      
+      <p class="hero-description animate-right delay-3">
+        Откройте для себя тысячи уникальных рецептов от лучших поваров со всего мира. 
+        Делитесь своими кулинарными шедеврами и вдохновляйте других!
+      </p>
+      
+      <div class="search-bar animate-scale delay-4">
+        <input 
+          type="text" 
+          placeholder="🔍 Поиск рецептов..." 
+          [(ngModel)]="searchQuery"
+          (keyup.enter)="onSearch()"
+        />
+        <button (click)="onSearch()">Найти</button>
+      </div>
+      
+      <div class="hero-actions animate-up delay-5">
+        @if (!authService.isLoggedIn()) {
+          <a routerLink="/login" class="btn-primary">
+            🔥 Начать готовить
+          </a>
+          <a routerLink="/recipes" class="btn-outline">
+            📖 Смотреть рецепты
+          </a>
+        } @else {
+          <a routerLink="/recipes/create" class="btn-primary">
+            ✨ Создать рецепт
+          </a>
+          <a routerLink="/recipes" class="btn-outline">
+            📚 Все рецепты
+          </a>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Категории -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header animate-up">
+        <h2>Популярные <span class="gradient-text">категории</span></h2>
+        <p>Выберите то, что вам по душе</p>
+      </div>
+      
+      <div class="categories-grid">
+        @for (cat of categories; track cat.value) {
+          <div class="category-card animate-scale" (click)="browseCategory(cat.value)">
+            <div class="category-emoji">{{ cat.emoji }}</div>
+            <div class="category-name">{{ cat.name }}</div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Популярные рецепты -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header animate-up">
+        <h2>🔥 Самые <span class="gradient-text">популярные</span> рецепты</h2>
+        <p>То, что любят наши пользователи</p>
+      </div>
+
+      @if (error) {
+        <div class="error-state animate-up">⚠️ {{ error }}</div>
+      }
+
+      @if (loading) {
+        <div class="loading-state">
+          <div class="spinner"></div>
+          <p style="margin-top: 16px;">Загружаем вкусняшки...</p>
+        </div>
+      } @else {
+        <div class="recipes-grid">
+          @for (recipe of featuredRecipes; track recipe.id) {
+            <app-recipe-card
+              [recipe]="recipe"
+              (likeToggled)="onLikeToggled($event)"
+              (saveToggled)="onSaveToggled($event)"
+            />
+          } @empty {
+            <p class="empty-state">🍽️ Рецептов пока нет</p>
+          }
+        </div>
+      }
+
+      <div class="see-all">
+        <a routerLink="/recipes" class="btn-outline">
+          Посмотреть все рецепты →
+        </a>
+      </div>
+    </div>
+  </section>
+</div>

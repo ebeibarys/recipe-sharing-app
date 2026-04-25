@@ -1,0 +1,95 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <span class="auth-logo-icon animate-float">🍴</span>
+      <span class="auth-logo-text">RecipeShare</span>
+    </div>
+
+    <div class="auth-tabs">
+      <button 
+        class="auth-tab" 
+        [class.active]="mode === 'login'" 
+        (click)="switchMode('login')">
+        🔐 Вход
+      </button>
+      <button 
+        class="auth-tab" 
+        [class.active]="mode === 'register'" 
+        (click)="switchMode('register')">
+        ✨ Регистрация
+      </button>
+    </div>
+
+    @if (error) {
+      <div class="error-msg animate-up">⚠️ {{ error }}</div>
+    }
+
+    @if (success) {
+      <div class="success-msg animate-up">✅ {{ success }}</div>
+    }
+
+    <!-- Форма входа -->
+    @if (mode === 'login') {
+      <div class="form-group">
+        <label>👤 Имя пользователя</label>
+        <input 
+          type="text" 
+          placeholder="Введите username" 
+          [(ngModel)]="loginForm.username" 
+          (keyup.enter)="onLogin()"
+        />
+      </div>
+      <div class="form-group">
+        <label>🔒 Пароль</label>
+        <input 
+          type="password" 
+          placeholder="••••••••" 
+          [(ngModel)]="loginForm.password" 
+          (keyup.enter)="onLogin()"
+        />
+      </div>
+      <button class="btn-submit" (click)="onLogin()" [disabled]="loading">
+        @if (loading) {
+          <span class="spinner-sm"></span> Вход...
+        } @else {
+          🔥 Войти в аккаунт
+        }
+      </button>
+    }
+
+    <!-- Форма регистрации -->
+    @if (mode === 'register') {
+      <div class="form-group">
+        <label>👤 Имя пользователя</label>
+        <input type="text" placeholder="Придумайте username" [(ngModel)]="registerForm.username" />
+      </div>
+      <div class="form-group">
+        <label>📧 Email</label>
+        <input type="email" placeholder="your@email.com" [(ngModel)]="registerForm.email" />
+      </div>
+      <div class="form-group">
+        <label>🔒 Пароль</label>
+        <input type="password" placeholder="Минимум 6 символов" [(ngModel)]="registerForm.password" />
+      </div>
+      <div class="form-group">
+        <label>✔️ Подтвердите пароль</label>
+        <input type="password" placeholder="Повторите пароль" [(ngModel)]="registerForm.confirmPassword" (keyup.enter)="onRegister()" />
+      </div>
+      <button class="btn-submit" (click)="onRegister()" [disabled]="loading">
+        @if (loading) {
+          <span class="spinner-sm"></span> Регистрация...
+        } @else {
+          ✨ Создать аккаунт
+        }
+      </button>
+    }
+
+    <p class="switch-hint">
+      @if (mode === 'login') {
+        Нет аккаунта? <a (click)="switchMode('register')">Зарегистрируйтесь</a>
+      } @else {
+        Уже есть аккаунт? <a (click)="switchMode('login')">Войдите</a>
+      }
+    </p>
+  </div>
+</div>

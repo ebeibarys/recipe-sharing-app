@@ -1,1 +1,624 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Абсолютно тёмная палитра - НИКАКОГО БЕЛОГО */
+  --bg-void:      #050508;
+  --bg-deep:      #0A0A0F;
+  --bg-surface:   #0F0F16;
+  --bg-card:      #12121A;
+  --bg-card-h:    #181822;
+  --bg-input:     #0A0A10;
+  --bg-elevated:  #1A1A26;
+
+  /* Неоновые акценты */
+  --neon-cyan:    #00F0FF;
+  --neon-pink:    #FF006E;
+  --neon-purple:  #B000FF;
+  --neon-yellow:  #FFE600;
+  --neon-red:     #FF0033;
+  --neon-green:   #00FF88;
+  --neon-blue:    #0066FF;
+  --neon-orange:  #FF6600;
+
+  /* Градиенты */
+  --grad-primary: linear-gradient(135deg, #FF006E, #B000FF, #00F0FF);
+  --grad-cyber:   linear-gradient(45deg, #00F0FF, #B000FF);
+  --grad-neon:    linear-gradient(135deg, #FF006E, #FFE600);
+  --grad-matrix:  linear-gradient(135deg, #00FF88, #00F0FF);
+  --grad-deep:    linear-gradient(135deg, #0F0F16, #050508);
+  --grad-fire:    linear-gradient(135deg, #FF0033, #FF006E, #FF6600);
+  
+  /* Текст - только светлые оттенки, НЕ БЕЛЫЕ */
+  --text-primary:  #E8E8F0;
+  --text-secondary: #A0A0C0;
+  --text-muted:    #606080;
+  --text-dim:      #3A3A50;
+
+  /* Границы с неоном */
+  --border:       rgba(0, 240, 255, 0.12);
+  --border-glow:  rgba(0, 240, 255, 0.4);
+  --border-pink:  rgba(255, 0, 110, 0.2);
+
+  /* Неоновые тени */
+  --glow-cyan:    0 0 20px rgba(0, 240, 255, 0.4), 0 0 40px rgba(0, 240, 255, 0.2);
+  --glow-pink:    0 0 20px rgba(255, 0, 110, 0.4), 0 0 40px rgba(255, 0, 110, 0.2);
+  --glow-purple:  0 0 20px rgba(176, 0, 255, 0.4), 0 0 40px rgba(176, 0, 255, 0.2);
+  --glow-card:    0 20px 40px rgba(0, 0, 0, 0.5);
+  --shadow-fire:  0 0 20px rgba(255, 0, 51, 0.3);
+  
+  /* Скругления */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+  --r-2xl: 40px;
+  --r-pill: 9999px;
+
+  /* Анимации */
+  --ease-spring: cubic-bezier(0.34, 1.2, 0.64, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --t-fast: 0.2s;
+  --t-norm: 0.4s;
+  --t-slow: 0.6s;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--bg-void);
+}
+
+body {
+  font-family: 'Inter', 'Space Grotesk', sans-serif;
+  background: var(--bg-void);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* КИБЕРПАНК ФОН С АНИМАЦИЕЙ */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(0, 240, 255, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(255, 0, 110, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, rgba(176, 0, 255, 0.04) 0%, transparent 50%),
+    repeating-linear-gradient(45deg, transparent 0px, transparent 40px, rgba(0, 240, 255, 0.02) 40px, rgba(0, 240, 255, 0.02) 80px);
+  pointer-events: none;
+  z-index: -2;
+  animation: bgShift 15s ease-in-out infinite;
+}
+
+@keyframes bgShift {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+/* Сканирующая линия */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 240, 255, 0.03) 48%,
+    rgba(255, 0, 110, 0.03) 50%,
+    rgba(0, 240, 255, 0.03) 52%,
+    transparent 100%
+  );
+  background-size: 100% 200%;
+  pointer-events: none;
+  z-index: -1;
+  animation: scanLine 10s linear infinite;
+}
+
+@keyframes scanLine {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 0% 100%; }
+}
+
+/* ============== КНОПКИ С WOW-ЭФФЕКТАМИ ============== */
+
+/* Базовая кнопка */
+.btn, button {
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s var(--ease-spring);
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+/* Ripple эффект */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(0, 240, 255, 0.3);
+  transform: scale(0);
+  animation: rippleAnim 0.6s linear;
+  pointer-events: none;
+}
+
+@keyframes rippleAnim {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Кнопка градиентная с неоном */
+.btn-gradient {
+  background: var(--grad-primary);
+  background-size: 200% 200%;
+  color: var(--text-primary);
+  padding: 14px 32px;
+  border-radius: var(--r-pill);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  animation: gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.btn-gradient:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--glow-pink);
+}
+
+.btn-gradient:active {
+  transform: translateY(2px);
+}
+
+/* Кнопка cyberpunk */
+.btn-cyber {
+  background: transparent;
+  border: 2px solid var(--neon-cyan);
+  color: var(--neon-cyan);
+  padding: 12px 28px;
+  border-radius: var(--r-md);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-cyber::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.15), transparent);
+  transition: left 0.5s;
+}
+
+.btn-cyber:hover {
+  border-color: var(--neon-pink);
+  color: var(--neon-pink);
+  box-shadow: 0 0 20px rgba(255, 0, 110, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-cyber:hover::before {
+  left: 100%;
+}
+
+/* Кнопка glitch */
+.btn-glitch {
+  background: var(--neon-pink);
+  color: var(--text-primary);
+  padding: 14px 32px;
+  border-radius: var(--r-pill);
+  font-weight: 800;
+  position: relative;
+}
+
+.btn-glitch:hover {
+  animation: glitchBtn 0.3s infinite;
+  transform: scale(1.05);
+}
+
+@keyframes glitchBtn {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 1px); }
+  40% { transform: translate(2px, -1px); }
+  60% { transform: translate(-1px, 2px); }
+  80% { transform: translate(1px, -2px); }
+  100% { transform: translate(0); }
+}
+
+/* Кнопка с неоновой пульсацией */
+.btn-neon-pulse {
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid var(--neon-cyan);
+  color: var(--neon-cyan);
+  padding: 12px 28px;
+  border-radius: var(--r-pill);
+  font-weight: 700;
+  backdrop-filter: blur(10px);
+  animation: neonPulse 2s infinite;
+}
+
+@keyframes neonPulse {
+  0%, 100% { 
+    box-shadow: 0 0 5px rgba(0, 240, 255, 0.3);
+    border-color: var(--neon-cyan);
+  }
+  50% { 
+    box-shadow: 0 0 25px rgba(0, 240, 255, 0.6);
+    border-color: #00FFFF;
+  }
+}
+
+.btn-neon-pulse:hover {
+  background: rgba(0, 240, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Кнопка магнит */
+.btn-magnetic {
+  background: var(--grad-cyber);
+  color: var(--text-primary);
+  padding: 14px 32px;
+  border-radius: var(--r-pill);
+  font-weight: 700;
+}
+
+.btn-magnetic:hover {
+  transform: perspective(500px) translateZ(20px);
+  box-shadow: var(--glow-purple);
+}
+
+/* ============== КАРТОЧКИ ============== */
+
+.card-glow {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  transition: all 0.4s var(--ease-spring);
+  position: relative;
+  overflow: hidden;
+}
+
+.card-glow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.05), transparent);
+  transition: left 0.6s;
+}
+
+.card-glow:hover {
+  transform: translateY(-10px) scale(1.02);
+  border-color: var(--neon-cyan);
+  box-shadow: var(--glow-cyan);
+}
+
+.card-glow:hover::before {
+  left: 100%;
+}
+
+/* ============== АНИМАЦИОННЫЕ КЛАССЫ ============== */
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(60px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-60px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(60px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9) rotate(-3deg); }
+  to { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes zoomIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes floatAnim {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(0, 240, 255, 0.3); }
+  50% { box-shadow: 0 0 50px rgba(0, 240, 255, 0.6); }
+}
+
+.animate-up { animation: fadeInUp 0.7s var(--ease-smooth) both; }
+.animate-left { animation: fadeInLeft 0.7s var(--ease-smooth) both; }
+.animate-right { animation: fadeInRight 0.7s var(--ease-smooth) both; }
+.animate-scale { animation: scaleIn 0.7s var(--ease-bounce) both; }
+.animate-slide-up { animation: slideInUp 0.7s var(--ease-spring) both; }
+.animate-zoom { animation: zoomIn 0.5s var(--ease-spring) both; }
+.animate-float { animation: floatAnim 4s ease-in-out infinite; }
+.animate-pulse { animation: pulseGlow 2s infinite; }
+.animate-spin-slow { animation: spinSlow 8s linear infinite; }
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.22s; }
+.delay-3 { animation-delay: 0.36s; }
+.delay-4 { animation-delay: 0.52s; }
+.delay-5 { animation-delay: 0.7s; }
+.delay-6 { animation-delay: 0.9s; }
+
+/* Неоновый текст */
+.neon-text {
+  text-shadow: 0 0 5px var(--neon-cyan), 0 0 10px var(--neon-cyan);
+}
+
+.neon-text-pink {
+  text-shadow: 0 0 5px var(--neon-pink), 0 0 10px var(--neon-pink);
+}
+
+.gradient-text {
+  background: var(--grad-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  background-size: 200% auto;
+  animation: gradientFlow 3s ease infinite;
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ============== ФОРМЫ И ИНПУТЫ ============== */
+
+input, textarea, select {
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 14px 18px;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: all 0.3s var(--ease-spring);
+  outline: none;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--text-dim);
+}
+
+/* ============== СКРОЛЛБАР ============== */
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-surface); border-radius: 10px; }
+::-webkit-scrollbar-thumb { 
+  background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink));
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover { 
+  background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+}
+
+/* ============== ВЫДЕЛЕНИЕ ТЕКСТА ============== */
+
+::selection {
+  background: rgba(0, 240, 255, 0.3);
+  color: var(--text-primary);
+}
+
+::-moz-selection {
+  background: rgba(0, 240, 255, 0.3);
+  color: var(--text-primary);
+}
+
+/* ============== ЛОАДЕР ============== */
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(0, 240, 255, 0.15);
+  border-top-color: var(--neon-cyan);
+  border-right-color: var(--neon-pink);
+  border-bottom-color: var(--neon-purple);
+  border-radius: 50%;
+  animation: spinNeon 0.8s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spinNeon {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.spinner-sm {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(0, 240, 255, 0.2);
+  border-top-color: var(--neon-cyan);
+  border-radius: 50%;
+  animation: spinNeon 0.6s linear infinite;
+  display: inline-block;
+}
+
+/* ============== КОНТЕЙНЕР ============== */
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ============== УБИРАЕМ ВЕСЬ БЕЛЫЙ ФОН (ФОРСИРОВАННО) ============== */
+
+/* Принудительно убираем белый фон у всех элементов */
+* {
+  background-color: transparent !important;
+}
+
+/* Возвращаем фон для нужных элементов */
+html,
+body,
+app-root,
+main,
+.home,
+.recipes-page,
+.detail-page,
+.create-page,
+.auth-page,
+.hero,
+.section {
+  background-color: var(--bg-void) !important;
+}
+
+.navbar,
+.nav-links,
+.nav-links.open,
+.dropdown-menu,
+.sidebar {
+  background: rgba(5, 5, 8, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+}
+
+.recipe-card,
+.detail-card,
+.create-card,
+.auth-card,
+.comment-item,
+.filter-bar,
+.card,
+.modal-content,
+.popup {
+  background: var(--bg-card) !important;
+}
+
+input,
+textarea,
+select,
+.search-input,
+.form-control {
+  background: var(--bg-input) !important;
+  color: var(--text-primary) !important;
+}
+
+button,
+.btn,
+.btn-primary,
+.btn-secondary,
+.btn-outline,
+.btn-login,
+.btn-create,
+.btn-submit,
+.btn-cancel,
+.btn-danger {
+  background: transparent !important;
+}
+
+/* Убираем белый цвет у всего текста */
+* {
+  color: inherit;
+}
+
+body, 
+.text-dark, 
+.text-black, 
+.text-white,
+.text-light {
+  color: var(--text-primary) !important;
+}
+
+/* Исправляем белые градиенты */
+.bg-white,
+.bg-light,
+.bg-gray-100,
+.bg-gray-50,
+.bg-gray-200 {
+  background: var(--bg-surface) !important;
+}
+
+/* Убираем белые рамки */
+.border-white,
+.border-light {
+  border-color: var(--border) !important;
+}
+
+/* ============== АДАПТИВ ============== */
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 20px;
+  }
+  
+  .btn-gradient, 
+  .btn-cyber, 
+  .btn-glitch, 
+  .btn-neon-pulse,
+  .btn-magnetic {
+    padding: 10px 24px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 16px;
+  }
+  
+  .btn-gradient, 
+  .btn-cyber, 
+  btn-glitch, 
+  .btn-neon-pulse,
+  .btn-magnetic {
+    padding: 8px 20px;
+    font-size: 0.85rem;
+  }
+}

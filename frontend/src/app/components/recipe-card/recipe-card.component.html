@@ -1,0 +1,32 @@
+<a class="recipe-card" [routerLink]="['/recipes', recipe.id]">
+  <div class="card-image">
+    @if (recipe.image) {
+      <img [src]="recipe.image" [alt]="recipe.title" loading="lazy" />
+    } @else {
+      <div class="card-emoji">{{ getCategoryEmoji(recipe.category_name || '') }}</div>
+    }
+    <div class="card-actions">
+      <button class="action-btn" (click)="onLike($event)" [class.liked]="recipe.is_liked" title="Лайк">
+        {{ recipe.is_liked ? '❤️' : '🤍' }}
+        <span class="likes-count">{{ recipe.likes_count }}</span>
+      </button>
+      <button class="action-btn" (click)="onSave($event)" [class.saved]="recipe.is_saved" title="Сохранить">
+        {{ recipe.is_saved ? '🔖' : '📑' }}
+      </button>
+    </div>
+    <span class="category-badge">{{ recipe.category_name || 'Без категории' }}</span>
+    <span class="diff-badge" [class]="getDifficultyClass(recipe.difficulty)">
+      {{ getDifficultyLabel(recipe.difficulty) }}
+    </span>
+  </div>
+
+  <div class="card-body">
+    <h3 class="card-title">{{ recipe.title }}</h3>
+    <p class="card-desc">{{ recipe.description }}</p>
+    <div class="card-meta">
+      <span>⏱ {{ recipe.cooking_time }} мин</span>
+      <span>👤 {{ recipe.servings }} порц.</span>
+      <span class="author">{{ recipe.author_name }}</span>
+    </div>
+  </div>
+</a>

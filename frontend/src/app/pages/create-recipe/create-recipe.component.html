@@ -1,0 +1,100 @@
+<div class="create-page">
+  <div class="create-card">
+    <div class="card-header">
+      <h1>🍳 Создать рецепт</h1>
+      <p>Поделитесь своим любимым блюдом с сообществом</p>
+    </div>
+
+    @if (error) {
+      <div class="error-msg">⚠️ {{ error }}</div>
+    }
+
+    <div class="form-grid">
+      <!-- Left column -->
+      <div class="form-col">
+        <div class="form-group">
+          <label>Название рецепта *</label>
+          <input type="text" [(ngModel)]="form.title" placeholder="Например: Борщ по-домашнему" maxlength="200" />
+        </div>
+
+        <div class="form-group">
+          <label>Описание *</label>
+          <textarea [(ngModel)]="form.description" rows="3" placeholder="Краткое описание блюда..."></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Время (мин) *</label>
+            <input type="number" [(ngModel)]="form.cooking_time" min="1" max="1440" />
+          </div>
+          <div class="form-group">
+            <label>Порции *</label>
+            <input type="number" [(ngModel)]="form.servings" min="1" max="100" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Сложность *</label>
+            <select [(ngModel)]="form.difficulty">
+              <option value="easy">🟢 Лёгкий</option>
+              <option value="medium">🟡 Средний</option>
+              <option value="hard">🔴 Сложный</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Категория</label>
+            <select [(ngModel)]="form.category">
+              <option [ngValue]="null">— Без категории —</option>
+              @for (cat of categories; track cat.id) {
+                <option [ngValue]="cat.id">{{ cat.name }}</option>
+              }
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Фото (URL)</label>
+          <input type="url" [(ngModel)]="form.image" placeholder="https://example.com/photo.jpg" />
+          @if (form.image) {
+            <div class="image-preview">
+              <img [src]="form.image" alt="preview" (error)="form.image=''" />
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Right column -->
+      <div class="form-col">
+        <div class="form-group flex-1">
+          <label>Ингредиенты * <span class="hint">каждый с новой строки</span></label>
+          <textarea
+            [(ngModel)]="form.ingredients"
+            rows="8"
+            placeholder="500 г муки&#10;2 яйца&#10;250 мл молока&#10;1 ч.л. соли"
+          ></textarea>
+        </div>
+
+        <div class="form-group flex-1">
+          <label>Инструкции * <span class="hint">каждый шаг с новой строки</span></label>
+          <textarea
+            [(ngModel)]="form.instructions"
+            rows="8"
+            placeholder="Смешайте муку с яйцами&#10;Добавьте молоко и соль&#10;Перемешайте до однородности"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-cancel" (click)="cancel()">Отмена</button>
+      <button class="btn-submit" (click)="submit()" [disabled]="loading">
+        @if (loading) {
+          <span class="btn-spinner"></span> Сохраняем...
+        } @else {
+          ✓ Опубликовать рецепт
+        }
+      </button>
+    </div>
+  </div>
+</div>
