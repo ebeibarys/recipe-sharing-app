@@ -1,25 +1,44 @@
 from django.urls import path
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from .views import (
     test_api,
-    category_list,
     register_user,
+    login_user,
+    logout_user,
+    me,
+    category_list,
     RecipeListCreateView,
     RecipeDetailView,
-    CommentCreateView
+    featured_recipes,
+    toggle_like,
+    toggle_save,
+    saved_recipes,
+    CommentListCreateView,
+    delete_comment,
 )
 
 urlpatterns = [
     path('test/', test_api),
 
-    path('login/', TokenObtainPairView.as_view()),
-    path('token/refresh/', TokenRefreshView.as_view()),
+    # Auth
+    path('auth/register/', register_user),
+    path('auth/login/', login_user),
+    path('auth/logout/', logout_user),
+    path('auth/me/', me),
 
+    # Categories
     path('categories/', category_list),
-    path('register/', register_user),
 
+    # Recipes
     path('recipes/', RecipeListCreateView.as_view()),
+    path('recipes/featured/', featured_recipes),
     path('recipes/<int:pk>/', RecipeDetailView.as_view()),
+    path('recipes/<int:pk>/like/', toggle_like),
+    path('recipes/<int:pk>/save/', toggle_save),
 
-    path('comments/', CommentCreateView.as_view()),
+    # Saved
+    path('saved/', saved_recipes),
+
+    # Comments
+    path('comments/', CommentListCreateView.as_view()),
+    path('comments/<int:pk>/', delete_comment),
 ]
